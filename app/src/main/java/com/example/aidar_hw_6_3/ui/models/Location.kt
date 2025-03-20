@@ -9,3 +9,17 @@ data class Location(
     val type: String,
     val dimension: String
 )
+val mockLocations = listOf(
+    Location(
+        id = 1,
+        name = "Earth",
+        type = "Planet",
+        dimension = "Dimension C-137"
+    ),
+    Location(
+        id = 2,
+        name = "Citadel of Ricks",
+        type = "Space Station",
+        dimension = "Unknown"
+    )
+)

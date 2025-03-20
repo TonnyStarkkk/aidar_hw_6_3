@@ -2,6 +2,7 @@ package com.example.aidar_hw_6_3.ui.screens.characters
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,42 +19,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import com.example.aidar_hw_6_3.data.MockData
+import com.example.aidar_hw_6_3.R
 import com.example.aidar_hw_6_3.ui.models.Character
-import com.example.aidar_hw_6_3.ui.navigation.Screen
+import com.example.aidar_hw_6_3.ui.models.mockCharacters
 
 @Composable
 fun CharactersScreen(navController: NavController) {
-    Column {
-        LazyColumn {
-            items(MockData.characters) { character ->
-                CharacterItem(character, navController)
+    LazyColumn {
+        items(mockCharacters) { character ->
+            CharacterItem(character) {
+                navController.navigate("characterDetail/${character.id}")
             }
         }
     }
 }
 
 @Composable
-fun CharacterItem(character: Character, navController: NavController) {
+fun CharacterItem(character: Character, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                val route = Screen.CharacterDetail.createRoute(character)
-                navController.navigate(route)
-            }
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable(
+                onClick = onClick
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             modifier = Modifier
                 .size(50.dp)
                 .clip(CircleShape),
-            painter = rememberAsyncImagePainter(character.image),
-            contentDescription = character.name,
+            painter = painterResource(R.drawable.ic_image),
+            contentDescription = null,
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column {
@@ -63,7 +63,7 @@ fun CharacterItem(character: Character, navController: NavController) {
             )
             Text(
                 text = character.status,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }

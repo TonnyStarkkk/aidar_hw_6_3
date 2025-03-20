@@ -9,3 +9,17 @@ data class Episode(
     val airDate: String,
     val episode: String
 )
+val mockEpisodes = listOf(
+    Episode(
+        id = 1,
+        name = "Pilot",
+        airDate = "December 2, 2013",
+        episode = "S01E01"
+    ),
+    Episode(
+        id = 2,
+        name = "The Ricklantis Mixup",
+        airDate = "September 10, 2017",
+        episode = "S03E07"
+    )
+)
