@@ -1,19 +1,19 @@
 package com.example.aidar_hw_6_3.data.serviceLocator
 
+import androidx.room.Room
 import com.example.aidar_hw_6_3.BuildConfig
 import com.example.aidar_hw_6_3.data.api.CharacterApiService
 import com.example.aidar_hw_6_3.data.api.EpisodeApiService
 import com.example.aidar_hw_6_3.data.api.LocationApiService
 import com.example.aidar_hw_6_3.data.repository.CharactersRepository
 import com.example.aidar_hw_6_3.data.repository.EpisodesRepository
+import com.example.aidar_hw_6_3.data.repository.FavoritesRepository
 import com.example.aidar_hw_6_3.data.repository.LocationsRepository
-import com.example.aidar_hw_6_3.ui.screens.characters.CharactersViewModel
-import com.google.gson.internal.GsonBuildConfig
+import com.example.aidar_hw_6_3.data.room.FavoritesDatabase
+import com.example.aidar_hw_6_3.data.room.MIGRATION_1_2
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.viewModel
-import org.koin.core.scope.get
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,6 +36,19 @@ val dataModule: Module = module {
     single { LocationsRepository(get()) }
 
     single { EpisodesRepository(get()) }
+
+    single {
+        Room.databaseBuilder(
+            get(), FavoritesDatabase::class.java,
+            "favorites_db"
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
+    }
+
+    single { get<FavoritesDatabase>().favoritesDao() }
+
+    single { FavoritesRepository(get()) }
 }
 
 private fun provideOkhttpClient(): OkHttpClient {

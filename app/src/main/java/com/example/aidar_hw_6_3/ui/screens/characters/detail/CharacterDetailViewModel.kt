@@ -17,7 +17,7 @@ class CharacterDetailViewModel(
     val characterDetailStateFlow: StateFlow<CharacterDTO?> get() = _characterDetailStateFlow
 
     fun fetchSingleCharacter(characterId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
                 val character = charactersRepository.fetchSingleCharacter(characterId)
                 _characterDetailStateFlow.value = character

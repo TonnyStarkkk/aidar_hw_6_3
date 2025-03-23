@@ -1,6 +1,7 @@
 package com.example.aidar_hw_6_3.ui.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -80,6 +81,27 @@ fun BottomNavigationBar(navController: NavController) {
                     if (currentRoute != NavigationRoutes.EpisodesScreen) {
                         navController.navigate(NavigationRoutes.EpisodesScreen) {
                             popUpTo(NavigationRoutes.EpisodesScreen) { inclusive = true }
+                        }
+                    }
+                }
+            )
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        Icons.Default.Favorite,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(
+                        text = "Favorites"
+                    )
+                },
+                selected = currentRoute == NavigationRoutes.FavoritesScreen,
+                onClick = {
+                    if (currentRoute != NavigationRoutes.FavoritesScreen) {
+                        navController.navigate(NavigationRoutes.FavoritesScreen) {
+                            popUpTo(NavigationRoutes.CharactersScreen) { inclusive = false }
                         }
                     }
                 }
