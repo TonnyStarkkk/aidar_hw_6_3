@@ -16,7 +16,7 @@ class LocationsViewModel(
     val locationsStateFlow: StateFlow<List<LocationDTO>> get() = _locationsStateFlow
 
     fun fetchAllLocations() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             locationsRepository.fetchAllLocations()?.let {
                 _locationsStateFlow.value = it
             }

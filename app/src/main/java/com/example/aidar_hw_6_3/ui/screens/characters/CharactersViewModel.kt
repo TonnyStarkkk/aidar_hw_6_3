@@ -17,7 +17,7 @@ class CharactersViewModel(
     val charactersStateFlow: StateFlow<List<CharacterDTO?>> get() = _charactersStateFlow
 
     fun fetchAllCharacters() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             charactersRepository.fetchAllCharacters()?.let {
                 _charactersStateFlow.value = it
             }

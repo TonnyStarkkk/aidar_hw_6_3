@@ -5,7 +5,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import androidx.compose.material3.TopAppBar
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.aidar_hw_6_3.ui.navigation.NavigationRoutes
 
@@ -24,6 +23,7 @@ fun TopAppBar(navController: NavController) {
                         NavigationRoutes.CharactersScreen -> "Characters"
                         NavigationRoutes.LocationsScreen -> "Locations"
                         NavigationRoutes.EpisodesScreen -> "Episodes"
+                        NavigationRoutes.FavoritesScreen -> "Favorites"
                         else -> "Unknown"
                     }
                 )

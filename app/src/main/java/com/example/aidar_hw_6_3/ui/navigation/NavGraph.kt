@@ -7,12 +7,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.aidar_hw_6_3.data.dto.character.OriginDTO
-import com.example.aidar_hw_6_3.ui.models.mockEpisodes
-import com.example.aidar_hw_6_3.ui.models.mockLocations
 import com.example.aidar_hw_6_3.ui.screens.characters.CharactersScreen
 import com.example.aidar_hw_6_3.ui.screens.characters.detail.CharacterDetailScreen
 import com.example.aidar_hw_6_3.ui.screens.episodes.EpisodesScreen
 import com.example.aidar_hw_6_3.ui.screens.episodes.detail.EpisodeDetailScreen
+import com.example.aidar_hw_6_3.ui.screens.favorites.FavoritesScreen
 import com.example.aidar_hw_6_3.ui.screens.locations.detail.LocationDetailScreen
 import com.google.gson.Gson
 
@@ -34,6 +33,9 @@ fun NavGraph(
         }
         composable(NavigationRoutes.EpisodesScreen) {
             EpisodesScreen(navController)
+        }
+        composable(NavigationRoutes.FavoritesScreen) {
+            FavoritesScreen(navController)
         }
 
         composable(NavigationRoutes.CharacterDetailScreen) { backStackEntry ->

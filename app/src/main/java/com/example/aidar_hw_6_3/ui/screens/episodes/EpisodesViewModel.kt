@@ -17,7 +17,7 @@ class EpisodesViewModel(
     val episodeStateFlow: StateFlow<List<EpisodeDTO>> get() = _episodesStateFlow
 
     fun fetchAllEpisodes() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             episodesRepository.fetchAllEpisodes()?.let {
                 _episodesStateFlow.value = it
             }

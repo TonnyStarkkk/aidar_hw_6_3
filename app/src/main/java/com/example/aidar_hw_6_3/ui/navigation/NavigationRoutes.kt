@@ -7,4 +7,5 @@ object NavigationRoutes {
     const val CharacterDetailScreen = "characterDetail/{characterId}"
     const val LocationDetailScreen = "locationDetail/{locationId}"
     const val EpisodeDetailScreen = "episodeDetail/{episodeId}"
+    const val FavoritesScreen = "favorites"
 }

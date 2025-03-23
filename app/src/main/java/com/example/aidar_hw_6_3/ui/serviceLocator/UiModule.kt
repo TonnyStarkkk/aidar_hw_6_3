@@ -4,6 +4,7 @@ import com.example.aidar_hw_6_3.ui.screens.characters.CharactersViewModel
 import com.example.aidar_hw_6_3.ui.screens.characters.detail.CharacterDetailViewModel
 import com.example.aidar_hw_6_3.ui.screens.episodes.EpisodesViewModel
 import com.example.aidar_hw_6_3.ui.screens.episodes.detail.EpisodeDetailViewModel
+import com.example.aidar_hw_6_3.ui.screens.favorites.FavoritesViewModel
 import com.example.aidar_hw_6_3.ui.screens.locations.LocationsViewModel
 import com.example.aidar_hw_6_3.ui.screens.locations.detail.LocationDetailViewModel
 import org.koin.core.module.Module
@@ -23,4 +24,6 @@ val uiModule: Module = module {
     viewModel { EpisodesViewModel(get()) }
 
     viewModel { EpisodeDetailViewModel(get()) }
+
+    viewModel { FavoritesViewModel(get()) }
 }
