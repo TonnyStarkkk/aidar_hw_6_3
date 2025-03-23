@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.aidar_hw_6_3.ui.models.mockCharacters
+import com.example.aidar_hw_6_3.data.dto.character.OriginDTO
 import com.example.aidar_hw_6_3.ui.models.mockEpisodes
 import com.example.aidar_hw_6_3.ui.models.mockLocations
 import com.example.aidar_hw_6_3.ui.screens.characters.CharactersScreen
@@ -14,6 +14,7 @@ import com.example.aidar_hw_6_3.ui.screens.characters.detail.CharacterDetailScre
 import com.example.aidar_hw_6_3.ui.screens.episodes.EpisodesScreen
 import com.example.aidar_hw_6_3.ui.screens.episodes.detail.EpisodeDetailScreen
 import com.example.aidar_hw_6_3.ui.screens.locations.detail.LocationDetailScreen
+import com.google.gson.Gson
 
 @Composable
 fun NavGraph(
@@ -37,32 +38,21 @@ fun NavGraph(
 
         composable(NavigationRoutes.CharacterDetailScreen) { backStackEntry ->
             val characterId = backStackEntry.arguments?.getString("characterId")?.toInt() ?: -1
-            val character = mockCharacters.find {
-                it.id == characterId
+            val originJson = backStackEntry.arguments?.getString("origin")
+            val origin = originJson?.let {
+                Gson().fromJson(it, OriginDTO::class.java)
             }
-            character?.let {
-                CharacterDetailScreen(it)
-            }
+            CharacterDetailScreen(characterId, origin)
         }
 
         composable(NavigationRoutes.LocationDetailScreen) { backStackEntry ->
             val locationId = backStackEntry.arguments?.getString("locationId")?.toInt() ?: -1
-            val location = mockLocations.find {
-                it.id == locationId
-            }
-            location?.let {
-                LocationDetailScreen(location)
-            }
+            LocationDetailScreen(locationId)
         }
 
         composable(NavigationRoutes.EpisodeDetailScreen) { backStackEntry ->
             val episodeId = backStackEntry.arguments?.getString("episodeId")?.toInt() ?: -1
-            val episode = mockEpisodes.find {
-                it.id == episodeId
-            }
-            episode?.let {
-                EpisodeDetailScreen(episode)
-            }
+            EpisodeDetailScreen(episodeId)
         }
     }
 }

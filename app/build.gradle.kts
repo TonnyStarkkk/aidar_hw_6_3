@@ -20,7 +20,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://rickandmortyapi.com/api/\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://rickandmortyapi.com/api/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -37,10 +41,24 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //Koin
+    implementation(libs.koin.android)
+    runtimeOnly(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
+    runtimeOnly(libs.koin.compose.viewmodel)
 
     //Navigation
     implementation(libs.androidx.navigation.compose)

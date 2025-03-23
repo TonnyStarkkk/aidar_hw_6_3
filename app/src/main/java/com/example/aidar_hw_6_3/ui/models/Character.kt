@@ -1,8 +1,5 @@
 package com.example.aidar_hw_6_3.ui.models
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Character(
     val id: Int,
     val name: String,
@@ -10,7 +7,7 @@ data class Character(
     val species: String,
     val image: String,
     val gender: String,
-    val location: String
+    val type: String
 )
 val mockCharacters = listOf(
     Character(
@@ -20,7 +17,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 2,
@@ -29,7 +26,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -38,7 +35,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -47,7 +44,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -56,7 +53,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -65,7 +62,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -74,7 +71,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -83,7 +80,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -92,7 +89,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -101,7 +98,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -110,7 +107,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -119,7 +116,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
     Character(
         id = 1,
@@ -128,7 +125,7 @@ val mockCharacters = listOf(
         species = "Human",
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         gender = "Male",
-        location = "Earth"
+        type = "Earth"
     ),
 
 )
