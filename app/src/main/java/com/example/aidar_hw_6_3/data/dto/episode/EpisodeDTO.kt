@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class EpisodeDTO(
     @SerializedName("id")
-    val id: Int,
+    val id: Int? = null,
     @SerializedName("name")
-    val name :String,
+    val name: String? = null,
     @SerializedName("air_date")
-    val airDate: String,
+    val airDate: String? = null,
     @SerializedName("episode")
-    val episode: String,
+    val episode: String? = null,
     @SerializedName("created")
-    val created: String
+    val created: String? = null
 )

@@ -61,11 +61,11 @@ fun EpisodeItem(episode: EpisodeDTO, onClick: () -> Unit) {
     ) {
         Column {
             Text(
-                text = episode.name,
+                text = episode.name!!,
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = episode.episode,
+                text = episode.episode!!,
                 style = MaterialTheme.typography.bodyMedium
             )
         }
