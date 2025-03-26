@@ -26,4 +26,5 @@ val uiModule: Module = module {
     viewModel { EpisodeDetailViewModel(get()) }
 
     viewModel { FavoritesViewModel(get()) }
+
 }

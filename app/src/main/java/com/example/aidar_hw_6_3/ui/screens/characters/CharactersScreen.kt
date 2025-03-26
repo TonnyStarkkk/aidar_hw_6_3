@@ -1,4 +1,3 @@
-
 package com.example.aidar_hw_6_3.ui.screens.characters
 
 import android.net.Uri
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -30,10 +30,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.filter
 import coil.compose.AsyncImage
 import com.example.aidar_hw_6_3.data.dto.character.CharacterDTO
 import com.example.aidar_hw_6_3.data.dto.character.originGson
 import com.example.aidar_hw_6_3.data.room.FavoritesCharacter
+import com.example.aidar_hw_6_3.ui.load.LoadState
 import com.example.aidar_hw_6_3.ui.screens.favorites.FavoritesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -47,36 +50,47 @@ fun CharactersScreen(
         viewModel.fetchAllCharacters()
     }
 
-    val characters = viewModel.charactersStateFlow.collectAsState()
+    val characters = viewModel.charactersStateFlow.collectAsLazyPagingItems()
     val favorites = favoritesViewModel.favoritesStateFlow.collectAsState()
+
+    LoadState(
+        loadState = characters.loadState,
+        onRetry = {
+            characters.retry()
+        }
+    )
 
     LazyColumn {
         items(
-            items = characters.value
-        ) { character ->
-            CharacterItem(
-                character = character!!,
-                onClick = {
-                    val encodedOrigin = Uri.encode(originGson)
-                    navController.navigate("characterDetail/${character.id}?origin=${encodedOrigin}")
-                },
-                isFavorite = favorites.value.any { favorites ->
-                    favorites.id == character.id
-                },
-                onFavoriteClick = {
-                    val favoriteCharacter = FavoritesCharacter(
-                        id = character.id!!,
-                        name = character.name!!,
-                        status = character.status!!
-                    )
-                    if (favorites.value.any { favorites ->
-                            favorites.id == character.id
-                        }) {
-                        favoritesViewModel.deleteFavoritesCharacter(favoriteCharacter)
-                    } else {
-                        favoritesViewModel.addFavoritesCharacter(favoriteCharacter)
+            count = characters.itemCount
+        ) { index ->
+            val character = characters[index]
+            character?.let {
+                CharacterItem(
+                    character = it,
+                    onClick = {
+                        val encodedOrigin = Uri.encode(originGson)
+                        navController.navigate("characterDetail/${character.id}?origin=${encodedOrigin}")
+                    },
+                    isFavorite = favorites.value.any { favorite ->
+                        favorite.id == character.id
+                    },
+                    onFavoriteClick = {
+                        val favoriteCharacter = FavoritesCharacter(
+                            id = character.id!!,
+                            name = character.name!!,
+                            status = character.status!!
+                        )
+                        if (favorites.value.any { favorites ->
+                                favorites.id == character.id
+                            }) {
+                            favoritesViewModel.deleteFavoritesCharacter(favoriteCharacter)
+                        } else {
+                            favoritesViewModel.addFavoritesCharacter(favoriteCharacter)
+                        }
                     }
-                })
+                )
+            }
         }
     }
 }
