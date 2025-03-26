@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.aidar_hw_6_3.data.dto.episode.EpisodeDTO
+import com.example.aidar_hw_6_3.ui.load.LoadState
 import com.example.aidar_hw_6_3.ui.models.Episode
 import com.example.aidar_hw_6_3.ui.models.mockEpisodes
 import kotlinx.serialization.json.Json
@@ -33,15 +35,25 @@ fun EpisodesScreen(
         viewModel.fetchAllEpisodes()
     }
 
-    val episodes = viewModel.episodeStateFlow.collectAsState()
+    val episodes = viewModel.episodeStateFlow.collectAsLazyPagingItems()
+
+    LoadState(
+        loadState = episodes.loadState,
+        onRetry = {
+            episodes.retry()
+        }
+    )
 
     Column {
         LazyColumn {
             items(
-                items = episodes.value
-            ) { episode ->
-                EpisodeItem(episode) {
-                    navController.navigate("episodeDetail/${episode.id}")
+                count = episodes.itemCount
+            ) { index ->
+                val episode = episodes[index]
+                episode?.let {
+                    EpisodeItem(episode) {
+                        navController.navigate("episodeDetail/${episode.id}")
+                    }
                 }
             }
         }

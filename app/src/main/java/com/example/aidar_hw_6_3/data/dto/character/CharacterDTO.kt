@@ -18,5 +18,5 @@ data class CharacterDTO(
     @SerializedName("type")
     val type: String? = null,
     @SerializedName("origin")
-    val origin: OriginDTO? = null
+    val origin: OriginDTO? = null,
 )

@@ -14,7 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.aidar_hw_6_3.data.dto.location.LocationDTO
+import com.example.aidar_hw_6_3.ui.load.LoadState
 import com.example.aidar_hw_6_3.ui.screens.locations.LocationsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -28,15 +30,25 @@ fun LocationsScreen(
         viewModel.fetchAllLocations()
     }
 
-    val locations = viewModel.locationsStateFlow.collectAsState()
+    val locations = viewModel.locationsStateFlow.collectAsLazyPagingItems()
+
+    LoadState(
+        loadState = locations.loadState,
+        onRetry = {
+            locations.retry()
+        }
+    )
 
     Column {
         LazyColumn {
             items(
-                items = locations.value
-            ) { location ->
-                LocationItem(location) {
-                    navController.navigate("locationDetail/${location.id}")
+                count = locations.itemCount
+            ) { index ->
+                val location = locations[index]
+                location?.let {
+                    LocationItem(location) {
+                        navController.navigate("locationDetail/${location.id}")
+                    }
                 }
             }
         }
