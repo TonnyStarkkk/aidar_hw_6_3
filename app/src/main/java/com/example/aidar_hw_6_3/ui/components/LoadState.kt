@@ -1,4 +1,4 @@
-package com.example.aidar_hw_6_3.ui.load
+package com.example.aidar_hw_6_3.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

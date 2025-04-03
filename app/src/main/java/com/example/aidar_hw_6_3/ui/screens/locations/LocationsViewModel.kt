@@ -15,6 +15,9 @@ class LocationsViewModel(
     private val locationsRepository: LocationsRepository
 ) : ViewModel() {
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     private val _locationsStateFlow = MutableStateFlow<PagingData<LocationDTO>>(PagingData.empty())
     val locationsStateFlow: StateFlow<PagingData<LocationDTO>> get() = _locationsStateFlow
 
@@ -22,6 +25,17 @@ class LocationsViewModel(
         viewModelScope.launch {
             locationsRepository.fetchAllLocations().flow.collectLatest {
                 _locationsStateFlow.value = it
+            }
+        }
+    }
+
+    fun refreshLocations() {
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            try {
+                fetchAllLocations()
+            } finally {
+                _isRefreshing.emit(false)
             }
         }
     }

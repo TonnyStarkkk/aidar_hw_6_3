@@ -1,5 +1,6 @@
 package com.example.aidar_hw_6_3.data.paging
 
+import androidx.core.net.toUri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.aidar_hw_6_3.data.api.LocationApiService
@@ -17,9 +18,12 @@ class LocationsPagingSource(
 
             val response = locationApiService.fetchAllLocations(currentPage)
 
-            val prevPage = if (currentPage > 0) currentPage.minus(1) else null
+            val prevPage = currentPage.takeIf { it > 0 }?.minus(1)
             val nextPage =
-                if (response.body()?.locationInfoDTO?.next != null) currentPage.plus(1) else null
+                if (response.body()?.locationInfoDTO?.next != null) {
+                    response.body()?.locationInfoDTO?.next?.toUri()?.getQueryParameter("page")
+                        ?.toInt()
+                } else null
 
             LoadResult.Page(
                 data = response.body()?.locations ?: emptyList(),

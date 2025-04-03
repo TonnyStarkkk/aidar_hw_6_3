@@ -15,6 +15,9 @@ class EpisodesViewModel(
     private val episodesRepository: EpisodesRepository
 ) : ViewModel() {
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     private val _episodesStateFlow = MutableStateFlow<PagingData<EpisodeDTO>>(PagingData.empty())
     val episodeStateFlow: StateFlow<PagingData<EpisodeDTO>> get() = _episodesStateFlow
 
@@ -22,6 +25,17 @@ class EpisodesViewModel(
         viewModelScope.launch {
             episodesRepository.fetchAllEpisodes().flow.collectLatest {
                 _episodesStateFlow.value = it
+            }
+        }
+    }
+
+    fun refreshEpisodes() {
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            try {
+                fetchAllEpisodes()
+            } finally {
+                _isRefreshing.emit(false)
             }
         }
     }
