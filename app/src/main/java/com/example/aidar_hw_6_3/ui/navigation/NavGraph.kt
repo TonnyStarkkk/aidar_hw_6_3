@@ -2,6 +2,11 @@ package com.example.aidar_hw_6_3.ui.navigation
 
 import LocationsScreen
 import android.content.Context
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -16,27 +21,65 @@ import com.example.aidar_hw_6_3.ui.screens.favorites.FavoritesScreen
 import com.example.aidar_hw_6_3.ui.screens.locations.detail.LocationDetailScreen
 import com.google.gson.Gson
 
+const val SCREEN_TRANSITION_MILLIS = 200
+
 @Composable
 fun NavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    listState: LazyListState
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = NavigationRoutes.CharactersScreen
+        startDestination = NavigationRoutes.CharactersScreen,
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Start,
+                tween(SCREEN_TRANSITION_MILLIS)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Start,
+                tween(SCREEN_TRANSITION_MILLIS)
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.End,
+                tween(SCREEN_TRANSITION_MILLIS)
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.End,
+                tween(SCREEN_TRANSITION_MILLIS)
+            )
+        }
     ) {
         composable(NavigationRoutes.CharactersScreen) {
-            CharactersScreen(navController)
+            CharactersScreen(
+                navController = navController,
+                listState = listState
+            )
         }
         composable(NavigationRoutes.LocationsScreen) {
-            LocationsScreen(navController)
+            LocationsScreen(
+                navController = navController,
+                listState = listState
+            )
         }
         composable(NavigationRoutes.EpisodesScreen) {
-            EpisodesScreen(navController)
+            EpisodesScreen(
+                navController = navController,
+                listState = listState
+            )
         }
         composable(NavigationRoutes.FavoritesScreen) {
-            FavoritesScreen(navController)
+            FavoritesScreen(
+                navController = navController
+            )
         }
 
         composable(NavigationRoutes.CharacterDetailScreen) { backStackEntry ->
@@ -45,17 +88,27 @@ fun NavGraph(
             val origin = originJson?.let {
                 Gson().fromJson(it, OriginDTO::class.java)
             }
-            CharacterDetailScreen(characterId, origin)
+            CharacterDetailScreen(
+                characterId = characterId,
+                origin = origin,
+                navController = navController
+            )
         }
 
         composable(NavigationRoutes.LocationDetailScreen) { backStackEntry ->
             val locationId = backStackEntry.arguments?.getString("locationId")?.toInt() ?: -1
-            LocationDetailScreen(locationId)
+            LocationDetailScreen(
+                locationId = locationId,
+                navController = navController
+            )
         }
 
         composable(NavigationRoutes.EpisodeDetailScreen) { backStackEntry ->
             val episodeId = backStackEntry.arguments?.getString("episodeId")?.toInt() ?: -1
-            EpisodeDetailScreen(episodeId)
+            EpisodeDetailScreen(
+                episodeId = episodeId,
+                navController = navController
+            )
         }
     }
 }

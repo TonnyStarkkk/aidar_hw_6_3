@@ -1,17 +1,12 @@
 package com.example.aidar_hw_6_3.ui.screens.characters.detail
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavType
 import com.example.aidar_hw_6_3.data.dto.character.CharacterDTO
 import com.example.aidar_hw_6_3.data.repository.CharactersRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.serializerOrNull
 
 class CharacterDetailViewModel(
     private val charactersRepository: CharactersRepository
